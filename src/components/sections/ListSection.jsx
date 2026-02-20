@@ -51,6 +51,14 @@ const ListSection = ({ items, onChange }) => {
                 className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-md text-sm outline-none focus:ring-1 focus:ring-blue-500 font-medium text-slate-800"
               />
             </div>
+            <div className="col-span-2">
+              <input
+                placeholder="Ciudad / Ubicación"
+                value={item.location}
+                onChange={(e) => updateItem(item.id, 'location', e.target.value)}
+                className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-md text-sm outline-none focus:ring-1 focus:ring-blue-500 text-slate-800"
+              />
+            </div>
             <div>
               <input
                 placeholder="Fecha Inicio"
