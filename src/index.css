@@ -34,6 +34,30 @@ body {
   color: black;
 }
 
+@media screen and (max-width: 1024px) {
+  .page-a4 {
+    transform: scale(0.9);
+    transform-origin: top center;
+    margin-bottom: -29mm;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .page-a4 {
+    transform: scale(0.65);
+    transform-origin: top center;
+    margin-bottom: -103mm;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .page-a4 {
+    transform: scale(0.48);
+    transform-origin: top center;
+    margin-bottom: -154mm;
+  }
+}
+
 @media print {
   @page {
     size: A4;
