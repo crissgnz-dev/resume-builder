@@ -4,12 +4,16 @@ import { initialData } from "./data/initialData";
 import Editor from "./components/Editor";
 import Preview from "./components/Preview";
 import DownloadModal from "./components/DownloadModal";
+import CVDocument from "./components/CVDocument";
+import { pdf } from "@react-pdf/renderer";
 import {
   Download,
   LayoutPanelLeft,
   FileEdit,
   Eye,
   AlertCircle,
+  Upload,
+  Save,
 } from "lucide-react";
 
 function App() {
@@ -35,30 +39,11 @@ function App() {
 
   const handleDownloadConfirm = async (customFilename) => {
     setIsModalOpen(false);
-    const element = document.getElementById("cv-preview");
-    if (!element) return;
 
     try {
-      const { toPng } = await import("html-to-image");
-      const { default: jsPDF } = await import("jspdf");
-
-      const dataUrl = await toPng(element, {
-        quality: 1.0,
-        pixelRatio: 2,
-        backgroundColor: "#ffffff",
-      });
-
-      const pdf = new jsPDF({
-        orientation: "p",
-        unit: "mm",
-        format: "a4",
-      });
-
-      const imgProps = pdf.getImageProperties(dataUrl);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-      pdf.addImage(dataUrl, "PNG", 0, 0, pdfWidth, pdfHeight);
+      // Generate Selectable PDF using react-pdf
+      const doc = <CVDocument data={resumeData} />;
+      const blob = await pdf(doc).toBlob();
 
       // Ensure .pdf extension
       let finalFilename = customFilename.trim();
@@ -66,12 +51,58 @@ function App() {
         finalFilename += ".pdf";
       }
 
-      pdf.save(finalFilename);
-      console.log("PDF guardado como:", finalFilename);
+      // Create download link
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = finalFilename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      console.log("PDF (Selectable) descargado como:", finalFilename);
     } catch (error) {
-      console.error("Error al generar PDF:", error);
+      console.error("Error al generar PDF seleccionable:", error);
       alert("Hubo un error al generar el PDF.");
     }
+  };
+
+  const handleExportData = () => {
+    const dataStr = JSON.stringify(resumeData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${resumeData.personalInfo.name.replace(/\s+/g, "_")}_data.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportData = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const json = JSON.parse(e.target.result);
+        if (json.personalInfo && json.sections) {
+          setResumeData(json);
+          alert("Datos importados correctamente.");
+        } else {
+          alert("Formato de archivo no válido.");
+        }
+      } catch (err) {
+        console.error("Error al importar JSON:", err);
+        alert("Error al leer el archivo JSON.");
+      }
+    };
+    reader.readAsText(file);
+    // Reset input
+    event.target.value = "";
   };
 
   return (
@@ -94,12 +125,33 @@ function App() {
           </h1>
         </div>
 
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-100 font-medium">
-          <Download size={18} />
-          Descargar PDF
-        </button>
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto">
+          <input
+            type="file"
+            id="import-json"
+            className="hidden"
+            accept=".json"
+            onChange={handleImportData}
+          />
+          <button
+            onClick={() => document.getElementById("import-json").click()}
+            className="flex-1 sm:flex-none border border-slate-200 hover:bg-slate-50 text-slate-600 px-3 py-2 rounded-lg flex items-center justify-center gap-2 transition-all font-medium text-sm">
+            <Upload size={16} />
+            Importar JSON
+          </button>
+          <button
+            onClick={handleExportData}
+            className="flex-1 sm:flex-none border border-slate-200 hover:bg-slate-50 text-slate-600 px-3 py-2 rounded-lg flex items-center justify-center gap-2 transition-all font-medium text-sm">
+            <Save size={16} />
+            Exportar JSON
+          </button>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-100 font-medium text-sm">
+            <Download size={18} />
+            Descargar PDF
+          </button>
+        </div>
       </header>
 
       {/* Tab Navigation for Mobile */}
