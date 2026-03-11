@@ -43,17 +43,18 @@ const TagsSection = ({ items, onChange }) => {
           </Reorder.Item>
         ))}
       </Reorder.Group>
-      <div className="flex gap-2">
+      <div className="flex gap-3 mt-2">
         <input
           value={newTag}
           onChange={(e) => setNewTag(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && addTag()}
           placeholder="Añadir habilidad..."
-          className="flex-1 px-3 py-1.5 bg-white border border-slate-200 rounded-md text-sm outline-none focus:ring-1 focus:ring-blue-500 text-slate-800"
+          className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 transition-all duration-300 hover:bg-white"
         />
         <button
           onClick={addTag}
-          className="p-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          className="px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-300 shadow-md shadow-blue-500/20 font-medium flex items-center gap-1 hover:-translate-y-0.5"
+        >
           <Plus size={18} />
         </button>
       </div>

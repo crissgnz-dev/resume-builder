@@ -44,7 +44,7 @@ const ListSection = ({ items, onChange }) => {
       {items.map((item, index) => (
         <div
           key={item.id}
-          className="relative px-4 pb-4 pt-10 border border-slate-100 rounded-lg bg-slate-50 space-y-3 shadow-sm">
+          className="relative px-5 pb-5 pt-11 border border-slate-200 rounded-2xl bg-slate-50/30 space-y-4 shadow-sm hover:shadow-md transition-all duration-300">
           <div className="absolute top-2 right-2 flex items-center gap-1">
             <button
               onClick={() => moveItem(index, -1)}
@@ -69,33 +69,33 @@ const ListSection = ({ items, onChange }) => {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div className="col-span-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="col-span-1 sm:col-span-2">
               <input
                 placeholder="Empresa / Institución"
                 value={item.company}
                 onChange={(e) => updateItem(item.id, "company", e.target.value)}
-                className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-md text-sm outline-none focus:ring-1 focus:ring-blue-500 text-slate-800"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-slate-800 transition-all hover:bg-slate-50"
               />
             </div>
-            <div className="col-span-2">
+            <div className="col-span-1 sm:col-span-2">
               <input
                 placeholder="Cargo / Título"
                 value={item.position}
                 onChange={(e) =>
                   updateItem(item.id, "position", e.target.value)
                 }
-                className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-md text-sm outline-none focus:ring-1 focus:ring-blue-500 font-medium text-slate-800"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 font-medium text-slate-800 transition-all hover:bg-slate-50"
               />
             </div>
-            <div className="col-span-2">
+            <div className="col-span-1 sm:col-span-2">
               <input
                 placeholder="Ciudad / Ubicación"
                 value={item.location}
                 onChange={(e) =>
                   updateItem(item.id, "location", e.target.value)
                 }
-                className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-md text-sm outline-none focus:ring-1 focus:ring-blue-500 text-slate-800"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-slate-800 transition-all hover:bg-slate-50"
               />
             </div>
             <div>
@@ -105,7 +105,7 @@ const ListSection = ({ items, onChange }) => {
                 onChange={(e) =>
                   updateItem(item.id, "startDate", e.target.value)
                 }
-                className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-md text-sm outline-none focus:ring-1 focus:ring-blue-500 text-slate-800"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-slate-800 transition-all hover:bg-slate-50"
               />
             </div>
             <div>
@@ -113,17 +113,17 @@ const ListSection = ({ items, onChange }) => {
                 placeholder="Fecha Fin / Actual"
                 value={item.endDate}
                 onChange={(e) => updateItem(item.id, "endDate", e.target.value)}
-                className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-md text-sm outline-none focus:ring-1 focus:ring-blue-500 text-slate-800"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-slate-800 transition-all hover:bg-slate-50"
               />
             </div>
-            <div className="col-span-2">
+            <div className="col-span-1 sm:col-span-2">
               <textarea
                 placeholder="Descripción / Logros"
                 value={item.description}
                 onChange={(e) =>
                   updateItem(item.id, "description", e.target.value)
                 }
-                className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-md text-sm outline-none focus:ring-1 focus:ring-blue-500 min-h-[80px] text-slate-800"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 min-h-[80px] text-slate-800 transition-all hover:bg-slate-50 resize-y"
               />
             </div>
           </div>
@@ -131,7 +131,7 @@ const ListSection = ({ items, onChange }) => {
       ))}
       <button
         onClick={addItem}
-        className="w-full py-2 flex items-center justify-center gap-2 text-blue-600 hover:bg-blue-50 rounded-lg border border-blue-200 text-sm font-medium transition-colors">
+        className="w-full py-3 flex items-center justify-center gap-2 text-blue-600 hover:text-blue-700 bg-blue-50/50 hover:bg-blue-100/50 rounded-xl border-2 border-dashed border-blue-200 text-sm font-medium transition-all duration-300 hover:shadow-sm">
         <Plus size={16} />
         Añadir Elemento
       </button>

@@ -4,10 +4,12 @@ import { AlertCircle } from "lucide-react";
 const Preview = ({ data, onOverflowChange }) => {
   const { personalInfo, sections } = data;
   const containerRef = useRef(null);
+  const wrapperRef = useRef(null);
   const [hasOverflow, setHasOverflow] = useState(false);
+  const [scale, setScale] = useState(1);
 
   useEffect(() => {
-    const checkOverflow = () => {
+    const checkOverflowAndScale = () => {
       if (containerRef.current) {
         // A4 height is roughly 1122px at 96dpi, but we use the fixed height from CSS
         const isOverflowing =
@@ -17,23 +19,41 @@ const Preview = ({ data, onOverflowChange }) => {
           onOverflowChange(isOverflowing);
         }
       }
+
+      if (wrapperRef.current) {
+        const wrapperWidth = wrapperRef.current.clientWidth;
+        // A4 width in pixels is roughly 794px at 96dpi.
+        const a4Width = 794;
+        if (wrapperWidth < a4Width) {
+          setScale(wrapperWidth / a4Width);
+        } else {
+          setScale(1);
+        }
+      }
     };
 
-    checkOverflow();
+    checkOverflowAndScale();
     // Re-check on content changes or window resize
-    const observer = new ResizeObserver(checkOverflow);
+    const observer = new ResizeObserver(checkOverflowAndScale);
     if (containerRef.current) observer.observe(containerRef.current);
+    if (wrapperRef.current) observer.observe(wrapperRef.current);
 
     return () => observer.disconnect();
-  }, [data]);
+  }, [data, onOverflowChange]);
+
+  // A4 original height is 1122px. We adjust wrapper height so the scaled document doesn't leave huge empty space.
+  const scaledHeight = 1122 * scale;
 
   return (
-    <div className="relative group">
+    <div className="relative group w-full flex justify-center" ref={wrapperRef} style={{ height: `${scaledHeight}px` }}>
       <div
         id="cv-preview"
         ref={containerRef}
-        className="page-a4 flex flex-col shadow-2xl origin-top transition-transform duration-300 bg-white"
-        style={{ color: "#1e293b" }} // slate-800 default
+        className="page-a4 flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-slate-100 origin-top transition-transform duration-300 bg-white absolute top-0"
+        style={{ 
+          color: "#1e293b",
+          transform: `scale(${scale})`
+        }}
       >
         {/* Header */}
         <header className="border-b-2 border-slate-900 pb-4 mb-6 text-center">

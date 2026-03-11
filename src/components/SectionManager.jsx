@@ -17,9 +17,9 @@ const SectionItem = ({ section, index, onUpdate, onDelete, onMove, isFirst, isLa
       value={section}
       dragListener={false}
       dragControls={dragControls}
-      className="group bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+      className="group bg-white border border-slate-200/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
     >
-      <div className="bg-slate-50 px-4 py-2 border-b border-slate-200 flex justify-between items-center">
+      <div className="bg-slate-50/50 px-5 py-3 border-b border-slate-200/60 flex justify-between items-center transition-colors group-hover:bg-slate-50">
         <div className="flex items-center gap-2">
           <div 
             onPointerDown={(e) => dragControls.start(e)}
@@ -131,21 +131,21 @@ const SectionManager = ({ sections, onUpdate }) => {
         {/* Buttons remain same */}
         <button 
           onClick={() => addSection('text')}
-          className="flex-1 py-3 border-2 border-dashed border-slate-200 rounded-xl text-slate-500 hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50 transition-all flex items-center justify-center gap-2 font-medium"
+          className="flex-1 py-3.5 border-2 border-dashed border-slate-200 rounded-2xl text-slate-500 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50/50 hover:shadow-sm transition-all duration-300 flex items-center justify-center gap-2 font-medium hover:-translate-y-0.5"
         >
           <Plus size={18} />
           Texto Libre
         </button>
         <button 
           onClick={() => addSection('list')}
-          className="flex-1 py-3 border-2 border-dashed border-slate-200 rounded-xl text-slate-500 hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50 transition-all flex items-center justify-center gap-2 font-medium"
+          className="flex-1 py-3.5 border-2 border-dashed border-slate-200 rounded-2xl text-slate-500 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50/50 hover:shadow-sm transition-all duration-300 flex items-center justify-center gap-2 font-medium hover:-translate-y-0.5"
         >
           <Plus size={18} />
           Lista (Exp/Edu)
         </button>
         <button 
           onClick={() => addSection('tags')}
-          className="flex-1 py-3 border-2 border-dashed border-slate-200 rounded-xl text-slate-500 hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50 transition-all flex items-center justify-center gap-2 font-medium"
+          className="flex-1 py-3.5 border-2 border-dashed border-slate-200 rounded-2xl text-slate-500 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50/50 hover:shadow-sm transition-all duration-300 flex items-center justify-center gap-2 font-medium hover:-translate-y-0.5"
         >
           <Plus size={18} />
           Habilidades

@@ -16,16 +16,16 @@ const PersonalInfoForm = ({ info, onChange }) => {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-4 bg-slate-50 p-6 rounded-xl border border-slate-100 shadow-sm">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
       {fields.map((field) => (
-        <div key={field.name} className={field.name === 'name' || field.name === 'title' ? 'col-span-2' : ''}>
-          <label className="block text-sm font-medium text-slate-600 mb-1">{field.label}</label>
+        <div key={field.name} className={field.name === 'name' || field.name === 'title' ? 'col-span-1 sm:col-span-2' : ''}>
+          <label className="block text-sm font-medium text-slate-600 mb-1.5">{field.label}</label>
           <input
             type={field.type}
             name={field.name}
             value={info[field.name]}
             onChange={handleChange}
-            className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-slate-800"
+            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 text-slate-800 hover:bg-white"
           />
         </div>
       ))}

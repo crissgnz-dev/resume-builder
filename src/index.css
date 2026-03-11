@@ -17,10 +17,13 @@
 
 body {
   margin: 0;
-  display: flex;
-  place-content: center;
-  min-width: 320px;
   min-height: 100vh;
+  background-color: #242424;
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* A4 Page Styles */
@@ -28,34 +31,11 @@ body {
   width: 210mm;
   height: 297mm;
   padding: 20mm;
-  margin: 0 auto;
+  margin: 0;
   background: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: black;
-}
-
-@media screen and (max-width: 1024px) {
-  .page-a4 {
-    transform: scale(0.9);
-    transform-origin: top center;
-    margin-bottom: -29mm;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .page-a4 {
-    transform: scale(0.65);
-    transform-origin: top center;
-    margin-bottom: -103mm;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .page-a4 {
-    transform: scale(0.48);
-    transform-origin: top center;
-    margin-bottom: -154mm;
-  }
+  transform-origin: top center;
 }
 
 @media print {
@@ -63,10 +43,12 @@ body {
     size: A4;
     margin: 0;
   }
-  body {
+  body,
+  #root {
     background: white;
     margin: 0;
     padding: 0;
+    overflow: visible;
   }
   .no-print {
     display: none !important;
@@ -90,5 +72,36 @@ body {
     width: 210mm !important;
     height: 297mm !important;
     border: none !important;
+    transform: none !important;
   }
+}
+
+/* Modern Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* slate-300 */
+  border-radius: 20px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+  transition: all 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* slate-400 */
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
 }
